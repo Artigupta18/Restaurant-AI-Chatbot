@@ -3,14 +3,6 @@ import json
 import uuid
 from openai import OpenAI
 
-
-api_key = st.secrets["OPENAI_API_KEY"]
-
-
-client = OpenAI(api_key=api_key)
-if "cart" not in st.session_state:
-    st.session_state.cart = {}
-
 if "orderHistory" not in st.session_state:
     st.session_state.orderHistory = {}
 
@@ -114,6 +106,12 @@ tools = [
     {"type": "function", "function": {"name": "viewOrderHistory", "description": "View past order history.", 
         "parameters": {"type": "object", "properties": {}, "required": [], "additionalProperties": False}}}
 ]
+api_key = st.secrets["OPENAI_API_KEY"]
+
+
+client = OpenAI(api_key=api_key)
+if "cart" not in st.session_state:
+    st.session_state.cart = {}
 
 def executeToolCall(toolCall):
     tool = toolCall.function
